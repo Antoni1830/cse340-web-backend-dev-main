@@ -32,6 +32,12 @@ app.use(session({
   name: 'sessionId',
 }))
 
+// Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 /* ***********************
  * View Engine and Templates
  *************************/
