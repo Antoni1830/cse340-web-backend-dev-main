@@ -4,8 +4,8 @@
   "description": "Starter project for CSE 340",
   "main": "server.js",
   "scripts": {
-    "start": "pnpm start"
-    
+    "start": "server.js",
+    "dev": "server.js"
   },
   "author": "",
   "license": "ISC",
