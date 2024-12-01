@@ -25,5 +25,22 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
-  }
+  },
+
+    "sqltools.connections": [
+        
+        {
+            "pgOptions": {
+                "ssl": {
+                    "rejectUnauthorized": true
+                }
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "render.com",
+            "connectString": "postgresql://dnameee:N9RaWFTVeYRwJ40HEF10aqoWWAs5bQ3O@dpg-ct3ud8a3esus73fb7slg-a.oregon-postgres.render.com/dbname_4v5e"
+        }
+    ]
+
 }
