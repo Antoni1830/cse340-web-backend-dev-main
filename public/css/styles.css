@@ -386,6 +386,19 @@ nav li a:hover {
 
 
 
+/* Acount*/
+
+.container{
+  height: 100%;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
 
 
 
