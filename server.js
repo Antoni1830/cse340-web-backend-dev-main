@@ -17,6 +17,7 @@ const static = require('./routes/static')
 const inventoryRoute = require('./routes/inventoryRoute')
 const accountRoute = require('./routes/accountRoute')
 const errorRoute = require('./routes/errorRoute')
+const cookieParser = require("cookie-parser")
 const bodyParser = require('body-parser')
 
 /* ***********************
@@ -34,7 +35,8 @@ app.use(
         name: 'sessionId',
     })
 )
-
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 // Express Messages Middleware
 app.use(require('connect-flash')())
 app.use(function (req, res, next) {
@@ -99,7 +101,7 @@ app.use(async (err, req, res, next) => {
  * Local Server Information
  * Values from .env (environment) file
  *********************************/
-const port=process.env.PORT||3001
+const port=process.env.PORT
 const host = process.env.HOST
 
 

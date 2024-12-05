@@ -389,14 +389,31 @@ nav li a:hover {
 /* Acount*/
 
 .container{
-  height: 100%;
+  margin-left: 250px;
+  max-width:max-content;
   text-transform: uppercase;
-  display: flex;
+  display: grid;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+ background-color:#01B0D3;
+ border: 2px solid black;;
+
+ 
 }
 
+.hola{
+  font-size: 9px;
+}
+
+.input{
+  font-size: 12px;
+
+}
+
+.submit-button{
+  text-align: center;
+}
 
 
 
