@@ -51,7 +51,7 @@ section h2, h1 {
 header a {
   align-self: center;
   text-decoration: none;
-  color:var(--secondary-color);
+  color: black;
 }
  
 .siteName {
@@ -65,7 +65,7 @@ header a {
 }
 /**************************************** ********************************/
 nav {
-  background-color: var(--secondary-color);
+  background-color: black;
   color:var(--primary-color);
   padding:3px;
 }
@@ -276,7 +276,7 @@ main {
 #delorean li h2 {
   margin-top: 0;
   margin-bottom: 0;
-  color: var(--accent-color1-);
+  color: black;
 }
  
 #delorean ul {
