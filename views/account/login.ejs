@@ -1,64 +1,47 @@
-<!-- Content Heading -->
 <% if (title) { %>
-<h1><%= title %></h1>
-<% } else { res.redirect('/') } %>
+    <h1><%- title %></h1>
+    <%} else {
+        res.redirect('/')
+    } %>
 
-<!-- Message Block -->
-<%- messages() %> <% if (errors) { %>
-<ul class="notice">
-    <% errors.array().forEach(error => { %>
-    <li><%= error.msg %></li>
-    <% }) %>
-</ul>
-<% } %>
+<%- messages()%>
 
-<div class="container">
-    <div class="login-container">
-        <form id="loginForm" class="form-container" action="/account/login" method="post">
-            <div class="input">
-                <p>Email</p>
-                <label for="account_email"></label>
-                <input
-                    type="email"
-                    id="account_email"
-                    name="account_email"
-                    required
-                    value="<%= locals.account_email %>"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                    title="Enter a valid email address (e.g., user@example.com)"
-                    placeholder="Enter your email"
-                />
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+    
+    <form class="account" action="/account/login" method="post">
+            <p>**All fields are required</p>
+            <div class="input-control">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="account_email" placeholder="john@email.com" required value="<%= locals.account_email %>" >
             </div>
-            <div class="input">
-                <p>Password</p>
-                <label for="account_password"></label>
-                <input
-                    type="password"
-                    id="account_password"
-                    name="account_password"
-                    required
-                    pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{12,}"
-                    title="Password must be at least 12 characters long and include at least one capital letter, one number, and one special character."
-                    placeholder="Enter your secure password"
-                />
-                <br>
-                <br>
-               
-                <p class="hola">Password must be at least 12 characters
-                    <br> long and include:</p>
-                <ul class="hola">
-                    <li>At least one capital letter</li>
-                    <li>At least one number</li>
-                    <li>At least one special character</li>
-                </ul>
-                <span id="passWordBtn">Show Password</span>
-                
+            <div class="input-control">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="account_password" required
+            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+            <span class="reveal-button active" id="passwordHide">Show password</span>
             </div>
+            <button type="submit">Login</button>
+            <p>No account? <a href="/account/register">Register Here</a></p>
+    </form> 
 
-            <div class="submit-button">
-                <button type="submit">Login</button>
-            </div>
-            <h3 class="hola">No Account? <a href="/account/registration">Sign-up</a></h3>
-        </form>
-    </div>
-</div>
+   <!-- Script to handle hiding and revealing password field -->
+<script>
+    const passwordInput = document.querySelector("#password");
+    const passwordHide = document.querySelector("#passwordHide");
+    passwordHide.addEventListener("click", () => {
+        if(passwordInput.getAttribute("type") == "password" ) {
+            passwordInput.setAttribute("type", "text");
+            passwordHide.classList.remove("active");
+        }
+        else {
+            passwordInput.setAttribute("type", "password");
+            passwordHide.classList.add("active");
+        }
+    })
+ </script>

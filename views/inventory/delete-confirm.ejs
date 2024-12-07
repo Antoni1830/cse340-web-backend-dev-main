@@ -1,0 +1,60 @@
+<!-- Content heading -->
+<% if (title) { %>
+    <h1><%- title %></h1>
+    <%} else {
+        res.redirect('/')
+    } %>
+  <%- messages()%>
+
+  <% if (errors) { %>
+      <ul class="notice">
+     <% errors.array().forEach(error => { %>
+       <li><%= error.msg %></li>
+    <%  }) %>
+     </ul>
+    <% } %>
+
+
+<form class="account" action="/inv/delete" method="post"> 
+    <h2>Please confirm Deletion</h2>
+    <p>Note: The delete is permanent.</p>
+   
+   <div class="input-control">
+    <label for="make">Make</label>
+    <input type="text" id="make" name="inv_make" placeholder="Min of 3 characters" 
+     pattern="^([a-zA-Z]){3}$"  readonly
+     required <% if(locals.inv_make) { %> value="<%= locals.inv_make %>"
+     <% } %>>
+   </div> 
+
+    <div class="input-control">
+    <label for="model">Model</label>
+    <input type="text" id="model" name="inv_model" 
+    placeholder="Min of 3 characters"  pattern="^([a-zA-Z]){3}$" 
+    <% if(locals.inv_model) { %> value="<%= locals.inv_model %>"
+    <% } %> required readonly>
+    </div>
+
+     <div class="input-control">
+        <label for="price">Price</label>
+        <div class="small"><i>decimal or integer</i></div>
+        <input type="text" id="price" name="inv_price" 
+        required readonly pattern="^\d+(\.\d{2})?$"  <% if(locals.inv_price) { %> value="<%= locals.inv_price %>"
+        <% } %>>
+    </div>
+
+    <div class="input-control">
+        <label for="year">Year</label>
+        <div class="small"><i>4-digit year</i></div>
+        <input type="text" id="year" name="inv_year" 
+        required readonly min="1900" max="2030" pattern="^\d{4}$"  <% if(locals.inv_year) { %> value="<%= locals.inv_year %>"
+        <% } %>>
+    </div>
+
+    <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>
+    
+    <button type="submit">Delete Vehicle</button>
+  
+</form>

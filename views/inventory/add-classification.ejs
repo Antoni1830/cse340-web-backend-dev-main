@@ -1,22 +1,25 @@
 <% if (title) { %>
-    <h1><%= title %></h1>
-    <% } else {
-      res.redirect('/')
+    <h1><%- title %></h1>
+    <%} else {
+        res.redirect('/')
     } %>
 
-    <%# messages() %>
-    <% if (errors && errors.array) { %>
-        <ul class="notice">
-           <% errors.array().forEach(error => { %>
-             <li><%= error.msg %></li>
-           <% }) %>
-        </ul>
-    <% } %>
+<%- messages()%>
 
-    <form action="/inv/add-classification" method="post" id="add-classification-form">
-        <fieldset id="classification-information">
-            <label for="classification_name">Classification</label>
-            <input type="text" name="classification_name" required placeholder="Sport" value="<%= locals.account_firstname %>" pattern="^[a-zA-Z0-9]+$">
-        </fieldset>
-        <input type="submit" value="Add New Classification">
-    </form>
+<% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+
+<form class="account" action="/inv/add-classification" method="post"> 
+    <p>**Field is required</p>
+    <div class="input-control">
+        <div class="mssg"><i>Name must be alphabetical characters only.</i></div>
+    <label for="classificationName">Classification Name:</label>
+    <input type="text" id="classificationName" name="classification_name" required pattern="^[a-zA-Z][a-zA-Z\s]*$">
+   </div>
+    <button type="submit">Add Classification</button>
+ </form>

@@ -1,56 +1,67 @@
-// Needed Resources
-const express = require('express')
-const router = new express.Router()
-const invController = require('../controllers/invController')
-const utilities = require('../utilities/')
-const regValidate = require('../utilities/inventory-validation')
+// Needed Resources 
+const express = require("express")
+const router = new express.Router() 
+const invController = require("../controllers/invController")
+const utilities = require("../utilities")
+const dataValidate = require('../utilities/inventory-validation')
 
 // Route to build inventory by classification view
-router.get('/type/:classificationId', utilities.handleErrors(invController.buildByClassificationId))
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-// Route to build details by InventoryID view
-router.get('/detail/:inventoryId', utilities.handleErrors(invController.buildByInventoryID))
+//Route to build inventory item detail view
+router.get("/detail/:itemId", utilities.handleErrors(invController.buildByItemId));
 
-// Route to build Inventory Management view
-router.get('/', utilities.handleErrors(invController.buildByInvManagement))
+//Route to build vevhicle management view
+router.get("/", utilities.handleErrors(invController.buildVehicleMngmt));
 
-// Route to build Add Classification View
-router.get('/add-classification', utilities.handleErrors(invController.buildByAddClassification))
+//Route to build add-classification view
+router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
 
-// Route to handle Add Classification
+//Process the add-classification data
 router.post(
-    '/add-classification',
-    regValidate.classificationRules(),
-    regValidate.checkClassificationData,
-    utilities.handleErrors(invController.addClassification)
-)
+    "/add-classification",
+dataValidate.classificationRules(),
+dataValidate.checkClassData,
+utilities.handleErrors(invController.addClassificationName));
 
-// Route to build Add Inventory View
-router.get('/add-inventory', utilities.handleErrors(invController.buildByAddInventory))
+//Route to build add-inventory view
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInv));
 
-// Route to handle Add Inventory
+//Process ADD NEW INVENTORY data
 router.post(
-    '/add-inventory',
-    regValidate.inventoryRules(),
-    regValidate.checkInventoryData,
-    utilities.handleErrors(invController.addInventory)
-)
+    "/add-inventory",
+dataValidate.inventoryRules(),    
+dataValidate.checkInvData,
+utilities.handleErrors(invController.addInvData)
+);
 
-// Route to build Get Inventory View
-router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON))
+//Router to get vehicles/cars for management view to update and delete
+router.get("/getInventory/:classification_id", utilities.handleErrors
+(invController.getInventoryJSON));
 
-// Route to build Edit Inventory View
-router.get('/edit/:inventoryId', utilities.handleErrors(invController.buildByEditInventory))
+//Route to edit vehicle/inventory 
+router.get("/edit/:itemId", utilities.handleErrors(invController.editVehicleForm));
 
-// Route to handle Edit/Update Inventory
-router.post(
-    '/update/',
-    regValidate.inventoryRules(),
-    regValidate.checkInventoryData,
-    utilities.handleErrors(invController.updateInventory)
-)
+//Route to handle incoming request to edit vehicle/inventory form
+router.post("/update/", 
+dataValidate.inventoryRules(),
+dataValidate.checkUpdateData,
+utilities.handleErrors(invController.updateInventory));
+
+//Route to delete vehicle/inventory form
+router.get("/delete/:itemId", utilities.handleErrors(invController.deleteInvConfirmation));
+router.post("/delete/", 
+utilities.handleErrors(invController.deleteInventory));
+
+module.exports = router;
 
 
 
 
-module.exports = router
+
+
+
+
+
+
+
