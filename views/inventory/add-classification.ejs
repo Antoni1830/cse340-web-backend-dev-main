@@ -1,0 +1,22 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+    <%# messages() %>
+    <% if (errors && errors.array) { %>
+        <ul class="notice">
+           <% errors.array().forEach(error => { %>
+             <li><%= error.msg %></li>
+           <% }) %>
+        </ul>
+    <% } %>
+
+    <form action="/inv/add-classification" method="post" id="add-classification-form">
+        <fieldset id="classification-information">
+            <label for="classification_name">Classification</label>
+            <input type="text" name="classification_name" required placeholder="Sport" value="<%= locals.account_firstname %>" pattern="^[a-zA-Z0-9]+$">
+        </fieldset>
+        <input type="submit" value="Add New Classification">
+    </form>
