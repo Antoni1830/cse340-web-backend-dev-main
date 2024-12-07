@@ -87,10 +87,10 @@ app.use(async (err, req, res, next) => {
   if (err.status == 404) {
     message = err.message
   } else {
-    message = "Yikes! The site is broken."
+    message = ":("
   }
   res.render("errors/error", {
-    title: err.status || 'Server Error',
+    title: err.status || ' Error 505',
     message,
     nav
   })
