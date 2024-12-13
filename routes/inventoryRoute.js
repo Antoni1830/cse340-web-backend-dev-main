@@ -1,67 +1,88 @@
 // Needed Resources 
-const express = require("express")
-const router = new express.Router() 
-const invController = require("../controllers/invController")
-const utilities = require("../utilities")
-const dataValidate = require('../utilities/inventory-validation')
+const express = require("express");
+const router = new express.Router();
+const invController = require("../controllers/invController");
+const utilities = require("../utilities/");
+const inventoryValidate = require("../utilities/inventory-validation");
+const { newInventoryRules, checkUpdateData } = require("../utilities/inventory-validation");
+const { requireEmployeeOrAdmin } = require("../utilities/auth-middleware");
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-//Route to build inventory item detail view
-router.get("/detail/:itemId", utilities.handleErrors(invController.buildByItemId));
+// Route to build inventory detail view
+router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildDetailByInventoryId));
 
-//Route to build vevhicle management view
-router.get("/", utilities.handleErrors(invController.buildVehicleMngmt));
-
-//Route to build add-classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
-
-//Process the add-classification data
-router.post(
-    "/add-classification",
-dataValidate.classificationRules(),
-dataValidate.checkClassData,
-utilities.handleErrors(invController.addClassificationName));
-
-//Route to build add-inventory view
-router.get("/add-inventory", utilities.handleErrors(invController.buildAddInv));
-
-//Process ADD NEW INVENTORY data
-router.post(
-    "/add-inventory",
-dataValidate.inventoryRules(),    
-dataValidate.checkInvData,
-utilities.handleErrors(invController.addInvData)
+// Route for inventory management view
+router.get(
+  "/",
+  requireEmployeeOrAdmin, // Protects management view
+  utilities.handleErrors(invController.managementView)
 );
 
-//Router to get vehicles/cars for management view to update and delete
-router.get("/getInventory/:classification_id", utilities.handleErrors
-(invController.getInventoryJSON));
+// Route to get a list of items in inventory based on the classification_id
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
-//Route to edit vehicle/inventory 
-router.get("/edit/:itemId", utilities.handleErrors(invController.editVehicleForm));
+// Route to add a classification
+router.get(
+  "/add-classification",
+  requireEmployeeOrAdmin, // Protects add-classification view
+  utilities.handleErrors(invController.addClassificationView)
+);
 
-//Route to handle incoming request to edit vehicle/inventory form
-router.post("/update/", 
-dataValidate.inventoryRules(),
-dataValidate.checkUpdateData,
-utilities.handleErrors(invController.updateInventory));
+// Route to validate classification data
+router.post(
+  "/add-classification",
+  requireEmployeeOrAdmin, // Protects add-classification post route
+  inventoryValidate.addClassificationRules(),
+  inventoryValidate.checkAddClassification,
+  utilities.handleErrors(invController.addClassification)
+);
 
-//Route to delete vehicle/inventory form
-router.get("/delete/:itemId", utilities.handleErrors(invController.deleteInvConfirmation));
-router.post("/delete/", 
-utilities.handleErrors(invController.deleteInventory));
+// Route to add inventory
+router.get(
+  "/add-inventory",
+  requireEmployeeOrAdmin, // Protects add-inventory view
+  utilities.handleErrors(invController.addInventoryView)
+);
+
+// Route to validate inventory data
+router.post(
+  "/add-inventory",
+  requireEmployeeOrAdmin, // Protects add-inventory post route
+  inventoryValidate.addInventoryRules(),
+  inventoryValidate.checkAddInventory,
+  utilities.handleErrors(invController.addInventory)
+);
+
+// Route to handle modifying an inventory item
+router.get(
+  "/edit/:inventoryId",
+  requireEmployeeOrAdmin, // Protects edit-inventory view
+  utilities.handleErrors(invController.editInventoryView)
+);
+
+// Route to validate updated information for an inventory item
+router.post(
+  "/update",
+  requireEmployeeOrAdmin, // Protects update-inventory post route
+  newInventoryRules(),
+  checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
+
+// Route to display delete confirmation view
+router.get(
+  "/delete/:inventoryId",
+  requireEmployeeOrAdmin, // Protects delete-confirmation view
+  utilities.handleErrors(invController.deleteInventoryView)
+);
+
+// Route to handle delete process
+router.post(
+  "/delete",
+  requireEmployeeOrAdmin, // Protects delete post route
+  utilities.handleErrors(invController.deleteInventory)
+);
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-

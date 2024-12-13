@@ -1,10 +1,13 @@
-<%# Heading %>
+<%# Content Heading %>
 <% if (title) { %>
-    <h1><%= title %></h1>
+    <h2 class="sub-heading"><%= title %></h2>
     <% } else {
       res.redirect('/')
     } %>
 
-    <%# messages() %>
+<%# Message Block %>
+<%# messages() %>
 
-    <%- grid %>
+<%# Inventory Items Display %>
+<%- grid %>
+<script src="/js/classification.js"></script>

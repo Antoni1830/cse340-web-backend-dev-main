@@ -430,6 +430,47 @@ figure figcaption {
   display: flex;
   justify-content: space-around;
 }
+#account .account-link {
+  font-size: 0.9em;
+  color: #393737;
+  text-decoration: none;
+  position: relative;
+  top: -10px;
+}
+
+#header #account {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+#header .account-info {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+#header .account-info a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+#header .account-info a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.welcome-link {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.welcome-link:hover {
+  text-decoration: underline;
+  color: #003f88;
+}
  
 #review h2, #add-ons h2 {
   font-size: 1.4em;
