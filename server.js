@@ -103,7 +103,7 @@ app.use(async (req, res, next) => {
 /* ***********************
  * Express Error Handler
  *************************/
-app.use(async (err, req, res, next) => {
+/*app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
   const message =
