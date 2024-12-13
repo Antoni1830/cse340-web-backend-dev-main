@@ -1,47 +1,66 @@
-<% if (title) { %>
-    <h1><%- title %></h1>
-    <%} else {
-        res.redirect('/')
-    } %>
+<h2 class="sub-heading"><%= title %></h2>
 
-<%- messages()%>
-
-<% if (errors) { %>
-    <ul class="notice">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
+<!-- Flash Message -->
+<div class="flash-message">
+  <%- messages() %>
+  <% if (errors && errors.length > 0) { %>
+    <div class="error-message">
+      <ul>
+        <% errors.forEach(function (error) { %>
+          <li><%= error.msg %></li>
+        <% }); %>
+      </ul>
+    </div>
   <% } %>
-    
-    <form class="account" action="/account/login" method="post">
-            <p>**All fields are required</p>
-            <div class="input-control">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="account_email" placeholder="john@email.com" required value="<%= locals.account_email %>" >
-            </div>
-            <div class="input-control">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="account_password" required
-            pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
-            <span class="reveal-button active" id="passwordHide">Show password</span>
-            </div>
-            <button type="submit">Login</button>
-            <p>No account? <a href="/account/register">Register Here</a></p>
-    </form> 
+  
+</div>
 
-   <!-- Script to handle hiding and revealing password field -->
-<script>
-    const passwordInput = document.querySelector("#password");
-    const passwordHide = document.querySelector("#passwordHide");
-    passwordHide.addEventListener("click", () => {
-        if(passwordInput.getAttribute("type") == "password" ) {
-            passwordInput.setAttribute("type", "text");
-            passwordHide.classList.remove("active");
+<!-- Login Form -->
+<form id="loginForm" action="/account/login" method="POST" class="login-form">
+  <label for="account_email">Email: <span class="required">*</span></label>
+  <input
+    type="email"
+    id="account_email"
+    name="account_email"
+    required
+    value="<%= typeof account_email !== 'undefined' ? locals.account_email : '' %>"
+  >
+  <span class="validation-message"></span>
+
+  <label for="account_password">Password: <span class="required">*</span></label>
+  <input
+    type="password"
+    id="account_password"
+    name="account_password"
+    required
+    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+    title="Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+  >
+  <span class="validation-message"></span>
+
+  <button type="submit">Login</button>
+</form>
+
+<!-- Registration Link -->
+<p class="register-link">
+  No account? <a href="/account/register">Sign-up</a>.
+</p>
+
+  <script>
+    document.querySelectorAll('input[required]').forEach((input) => {
+      input.addEventListener('blur', (event) => {
+        const field = event.target;
+        const validationMessage = field.nextElementSibling;
+  
+        if (validationMessage && validationMessage.classList.contains('validation-message')) {
+          if (!field.value) {
+            field.classList.add('error');
+            validationMessage.textContent = 'This field is required.';
+          } else {
+            field.classList.remove('error');
+            validationMessage.textContent = '';
+          }
         }
-        else {
-            passwordInput.setAttribute("type", "password");
-            passwordHide.classList.add("active");
-        }
-    })
- </script>
+      });
+    });
+  </script>
