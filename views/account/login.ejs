@@ -41,10 +41,18 @@
   <button type="submit">Login</button>
 </form>
 
+
 <!-- Registration Link -->
 <p class="register-link">
   No account? <a href="/account/register">Sign-up</a>.
 </p>
+<div>
+
+  <div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    <strong>Remember!</strong> Please log in for full access.
+  </div>
+
 
   <script>
     document.querySelectorAll('input[required]').forEach((input) => {
